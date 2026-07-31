@@ -1,6 +1,13 @@
 const display = document.getElementById("display");
+const clickSound = document.getElementById("clickSound");
+
+function playSound() {
+    clickSound.currentTime = 0;
+    clickSound.play();
+}
 
 function appendValue(value){
+    playSound();
  if(display.textContent === "0"){
  display.textContent = value;
  }else{
@@ -9,10 +16,12 @@ function appendValue(value){
 }
 
 function clearDisplay(){
+    playSound();
  display.textContent = "0";
 }
 
 function deleteLast(){
+    playSound();
  if(display.textContent.length === 1){
  display.textContent = "0";
  }else{
@@ -22,6 +31,7 @@ function deleteLast(){
 }
 
 function calculate(){
+    playSound();
  try{
  display.textContent =
  eval(display.textContent);
