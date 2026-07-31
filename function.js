@@ -1,67 +1,49 @@
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
- font-family:Arial, sans-serif;
+const display = document.getElementById("display");
+
+function appendValue(value){
+ if(display.textContent === "0"){
+ display.textContent = value;
+ }else{
+ display.textContent += value;
+ }
 }
 
-body{
- background:#222;
- display:flex;
- justify-content:center;
- align-items:center;
- height:100vh;
+function clearDisplay(){
+ display.textContent = "0";
 }
 
-.calculator{
- width:320px;
- background:#333;
- padding:20px;
- border-radius:15px;
- box-shadow:0 0 15px rgba(0,0,0,.4);
+function deleteLast(){
+ if(display.textContent.length === 1){
+ display.textContent = "0";
+ }else{
+ display.textContent =
+ display.textContent.slice(0,-1);
+ }
 }
 
-#display{
- width:100%;
- height:70px;
- background:#111;
- color:white;
- font-size:32px;
- text-align:right;
- padding:15px;
- border-radius:10px;
- margin-bottom:15px;
- overflow:hidden;
+function calculate(){
+ try{
+ display.textContent =
+ eval(display.textContent);
+ }catch{
+ display.textContent = "Error";
+ }
 }
 
-.buttons{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px;
-}
+document.addEventListener("keydown", function(event){
 
-button{
- height:60px;
- border:none;
- border-radius:10px;
- font-size:22px;
- cursor:pointer;
- background:#555;
- color:white;
-}
+ const key = event.key;
 
-button:hover{
- background:#777;
-}
-
-.operator{
- background:#ff9500;
-}
-
-.equal{
- background:#28a745;
-}
-
-.zero{
- grid-column:span 2;
-}
+ if(!isNaN(key) || "+-*/.%".includes(key)){
+ appendValue(key);
+ }
+ else if(key === "Enter"){
+ calculate();
+ }
+ else if(key === "Backspace"){
+ deleteLast();
+ }
+ else if(key === "Escape"){
+ clearDisplay();
+ }
+});
